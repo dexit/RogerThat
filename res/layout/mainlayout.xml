@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="match_parent"
+	android:layout_width="match_parent"
+	android:background="#0C346C">
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:text="Roger That"
+		android:layout_width="wrap_content"
+		android:textSize="45sp"
+		android:layout_centerHorizontal="true"
+		android:textColor="#FFFFFF"/>
+
+	<Button
+		android:layout_height="80sp"
+		android:text="Hold To Speak"
+		android:layout_width="match_parent"
+		android:layout_centerVertical="true"
+		android:layout_centerHorizontal="true"
+		android:id="@+id/speakButton"/>
+
+	<SeekBar
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:layout_alignParentBottom="true"
+		android:id="@+id/seekBar"/>
+
+</RelativeLayout>
+
