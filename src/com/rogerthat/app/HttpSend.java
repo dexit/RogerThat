@@ -9,9 +9,9 @@ public class HttpSend implements Runnable
 	String title;
 	String desc;
 	FileInputStream is;
-	byte[] data;
 	String TAG ="HttpSend";
-	String response;
+	private String response =null;
+	private int responseCode = -1 ;
 	String filename;
 	public HttpSend(String url, String title, String desc, FileInputStream is, String filename){
 		this.title = title;
@@ -31,7 +31,78 @@ public class HttpSend implements Runnable
 	@Override
 	public void run()
 	{
+		String lineEnd = "\r\n";
+		String twoHyphens = "--";
+		String boundary = "*****";
 		
+		try
+		{
+			HttpURLConnection conn = (HttpURLConnection) sendUrl.openConnection();
+			conn.setDoInput(true);
+			conn.setDoOutput(true);
+			conn.setUseCaches(false);
+			// setFixedLengthStreamingMode experimental
+			conn.setFixedLengthStreamingMode(is.available());
+			//..
+			conn.setRequestMethod("POST");
+			conn.setRequestProperty("Connection", "Keep-Alive");
+			conn.setRequestProperty("Content-Type", "multipart/form-data;boundary="+boundary);
+			
+			DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
+			dos.writeBytes(twoHyphens + boundary + lineEnd);
+			dos.writeBytes("Content-Disposition: form-data;name=\"title\"" +lineEnd);
+			dos.writeBytes(lineEnd);
+			dos.writeBytes(title);
+			dos.writeBytes(lineEnd);
+			dos.writeBytes(twoHyphens+boundary+lineEnd);
+			
+			
+			dos.writeBytes("Content-Disposition: form-data;name=\"description\""+lineEnd);
+			dos.writeBytes(lineEnd);
+			dos.writeBytes(desc);
+			dos.writeBytes(lineEnd);
+			dos.writeBytes(twoHyphens+boundary+lineEnd);
+			
+			dos.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\";filename=\""+filename+"\""+lineEnd);
+			dos.writeBytes(lineEnd);
+			
+			int bytesAvailable = is.available();
+			int maxBufferSize = 1024;
+			int maxSize = Math.min(bytesAvailable, maxBufferSize);
+			byte[] buffer = new byte[maxSize];
+			int bytesRead = is.read(buffer, 0, maxSize);
+			
+			while(bytesRead > 0){
+				dos.write(buffer,0,maxSize);
+				bytesAvailable = is.available();
+				maxSize = Math.min(bytesAvailable,maxBufferSize);
+				bytesRead = is.read(buffer,0,maxSize);
+			}
+			
+			is.close();
+			dos.flush();
+			responseCode = conn.getResponseCode();
+			InputStream rs = conn.getInputStream();
+			int chr;
+			StringBuffer s = new StringBuffer();
+			while((chr = rs.read()) != -1){
+				s.append((char) chr);
+			}
+			response = s.toString();
+		}
+		catch (IOException e)
+		{
+			Log.e(TAG, e.getMessage());
+		}
+
+	}
+	
+	public String getResponse(){
+		return response;
+	}
+	
+	public int getResponseCode(){
+		return responseCode;
 	}
 
 }

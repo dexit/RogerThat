@@ -13,6 +13,7 @@ public class AudioRecorder extends MediaRecorder implements MediaRecorder.OnErro
 	Context context;
 	String TAG = "Audio Recorder";
 	private String curFilePath = null;
+	private String curFileName = null;
 	
 	public AudioRecorder(Context ctx) {
 		super();
@@ -23,6 +24,7 @@ public class AudioRecorder extends MediaRecorder implements MediaRecorder.OnErro
 	public String createFilePath() throws IOException{
 		String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 		File dir = context.getExternalFilesDir(null);
+		curFileName = "TEMP_"+timestamp+"_"+".3gp";
 		File temp = File.createTempFile("TEMP_"+timestamp+"_", ".3gp",dir);
 		
 		return temp.getAbsolutePath();
@@ -54,6 +56,10 @@ public class AudioRecorder extends MediaRecorder implements MediaRecorder.OnErro
 	
 	public String getCurFilePath(){
 		return curFilePath;
+	}
+	
+	public String getCurFileName(){
+		return curFileName;
 	}
 	
 }
