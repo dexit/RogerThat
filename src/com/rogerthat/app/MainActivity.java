@@ -61,7 +61,7 @@ public class MainActivity extends Activity
 									((Button)view).setText("Hold To Speak");
 									try
 									{
-										player.playFile(recorder.getCurFilename());
+										player.playFile(recorder.getCurFilePath());
 									}
 									catch (IOException e)
 									{

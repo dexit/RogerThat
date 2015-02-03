@@ -12,7 +12,7 @@ public class AudioRecorder extends MediaRecorder implements MediaRecorder.OnErro
 {
 	Context context;
 	String TAG = "Audio Recorder";
-	private String curFilename = null;
+	private String curFilePath = null;
 	
 	public AudioRecorder(Context ctx) {
 		super();
@@ -20,7 +20,7 @@ public class AudioRecorder extends MediaRecorder implements MediaRecorder.OnErro
 		
 	}
 	
-	public String createFileName() throws IOException{
+	public String createFilePath() throws IOException{
 		String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 		File dir = context.getExternalFilesDir(null);
 		File temp = File.createTempFile("TEMP_"+timestamp+"_", ".3gp",dir);
@@ -29,13 +29,13 @@ public class AudioRecorder extends MediaRecorder implements MediaRecorder.OnErro
 	}
 	
 	public void startRecording() throws IOException{
-		curFilename = createFileName();
+		curFilePath = createFilePath();
 		
 		setAudioSource(MediaRecorder.AudioSource.MIC);
 		setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
 		setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 		setOnErrorListener(this);
-		setOutputFile(curFilename);
+		setOutputFile(curFilePath);
 		prepare();
 		start();
 	}
@@ -52,8 +52,8 @@ public class AudioRecorder extends MediaRecorder implements MediaRecorder.OnErro
 		Toast.makeText(context,"Audio capture failed! Try again.",Toast.LENGTH_LONG).show();
 	}
 	
-	public String getCurFilename(){
-		return curFilename;
+	public String getCurFilePath(){
+		return curFilePath;
 	}
 	
 }
