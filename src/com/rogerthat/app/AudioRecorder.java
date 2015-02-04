@@ -50,7 +50,7 @@ public class AudioRecorder extends MediaRecorder implements MediaRecorder.OnErro
 		i.putExtra("filename",curFileName);
 		i.putExtra("filepath", curFilePath);
 		i.putExtra("channel",((MainActivity)context).getChannel());
-		// Service disabled php scripts not implemented yet
+		// Service disabled PHP scripts not implemented yet
 		//context.startService(i);
 	}
 	@Override
