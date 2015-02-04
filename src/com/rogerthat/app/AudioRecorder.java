@@ -45,7 +45,12 @@ public class AudioRecorder extends MediaRecorder implements MediaRecorder.OnErro
 	public void stopRecording(){
 		stop();
 		reset();
-		//start Service to send file to server
+		
+		Intent  i = new Intent(context, AudioSendService.class);
+		i.putExtra("filename",curFileName);
+		i.putExtra("filepath", curFilePath);
+		// Service disabled php scripts not implemented yet
+		//context.startService(i);
 	}
 	@Override
 	public void onError(MediaRecorder p1, int p2, int p3)

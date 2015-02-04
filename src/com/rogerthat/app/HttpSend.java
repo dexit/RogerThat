@@ -63,7 +63,7 @@ public class HttpSend implements Runnable
 			dos.writeBytes(lineEnd);
 			dos.writeBytes(twoHyphens+boundary+lineEnd);
 			
-			dos.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\";filename=\""+filename+"\""+lineEnd);
+			dos.writeBytes("Content-Disposition: form-data; name=\"uploadedmsg\";filename=\""+filename+"\""+lineEnd);
 			dos.writeBytes(lineEnd);
 			
 			int bytesAvailable = is.available();
