@@ -22,6 +22,12 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
 		setContentView(R.layout.mainlayout);
 		
+		String extStorageState = Environment.getExternalStorageState();
+		if(extStorageState.compareTo(Environment.MEDIA_MOUNTED) != 0){
+			Toast.makeText(this, "Check your sd card and restart app ;"+extStorageState, Toast.LENGTH_LONG).show();
+			return;
+		}
+		
 		recorder = new AudioRecorder(this);
 		player = new AudioPlayer(this);
 		

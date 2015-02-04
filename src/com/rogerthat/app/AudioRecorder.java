@@ -23,8 +23,9 @@ public class AudioRecorder extends MediaRecorder implements MediaRecorder.OnErro
 	
 	public String createFilePath() throws IOException{
 		String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-		File dir = context.getExternalFilesDir(null);
 		curFileName = "TEMP_"+timestamp+"_"+".3gp";
+
+		File dir = context.getExternalFilesDir(null);	
 		File temp = File.createTempFile("TEMP_"+timestamp+"_", ".3gp",dir);
 		
 		return temp.getAbsolutePath();
