@@ -49,6 +49,7 @@ public class AudioRecorder extends MediaRecorder implements MediaRecorder.OnErro
 		Intent  i = new Intent(context, AudioSendService.class);
 		i.putExtra("filename",curFileName);
 		i.putExtra("filepath", curFilePath);
+		i.putExtra("channel",((MainActivity)context).getChannel());
 		// Service disabled php scripts not implemented yet
 		//context.startService(i);
 	}
