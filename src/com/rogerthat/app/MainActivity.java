@@ -24,8 +24,8 @@ public class MainActivity extends Activity
 		
 		String extStorageState = Environment.getExternalStorageState();
 		if(extStorageState.compareTo(Environment.MEDIA_MOUNTED) != 0){
-			Toast.makeText(this, "Check your sd card and restart app ;"+extStorageState, Toast.LENGTH_LONG).show();
-			return;
+			Toast.makeText(this, "Check your sd card.", Toast.LENGTH_LONG).show();
+			finish();
 		}
 		
 		recorder = new AudioRecorder(this);
@@ -67,6 +67,8 @@ public class MainActivity extends Activity
 									((Button)view).setText("Hold To Speak");
 									try
 									{
+										player.stop();
+										player.reset();
 										player.playFile(recorder.getCurFilePath());
 									}
 									catch (IOException e)
@@ -113,5 +115,8 @@ public class MainActivity extends Activity
 	
 	public int getChannel(){
 		return curChannel;
+	}
+	public void setChannel(int channel){
+		curChannel = channel;
 	}
 }

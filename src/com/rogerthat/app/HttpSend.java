@@ -13,6 +13,7 @@ public class HttpSend implements Runnable
 	private String response =null;
 	private int responseCode = -1 ;
 	String filename;
+	
 	public HttpSend(String url, String title, String desc, FileInputStream is, String filename){
 		this.title = title;
 		this.desc = desc;
@@ -22,9 +23,9 @@ public class HttpSend implements Runnable
 		{
 			sendUrl = new URL(url);
 		}
-		catch (MalformedURLException e)
+		catch (Exception e)
 		{
-			Log.i(TAG, "Malformed Url Exception");
+			Log.i(TAG, e.getMessage());
 		}
 	}
 
@@ -63,7 +64,7 @@ public class HttpSend implements Runnable
 			dos.writeBytes(lineEnd);
 			dos.writeBytes(twoHyphens+boundary+lineEnd);
 			
-			dos.writeBytes("Content-Disposition: form-data; name=\"uploadedmsg\";filename=\""+filename+"\""+lineEnd);
+			dos.writeBytes("Content-Disposition: form-data;name=\"uploadedmsg\";filename=\""+filename+"\""+lineEnd);
 			dos.writeBytes(lineEnd);
 			
 			int bytesAvailable = is.available();
@@ -90,7 +91,7 @@ public class HttpSend implements Runnable
 			}
 			response = s.toString();
 		}
-		catch (IOException e)
+		catch (Exception e)
 		{
 			Log.e(TAG, e.getMessage());
 		}

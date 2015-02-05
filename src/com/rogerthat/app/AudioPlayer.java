@@ -2,6 +2,7 @@ package com.rogerthat.app;
 import android.media.*;
 import android.content.*;
 import java.io.*;
+import android.util.*;
 
 public class AudioPlayer extends MediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener,
 MediaPlayer.OnCompletionListener
@@ -12,6 +13,7 @@ MediaPlayer.OnCompletionListener
 	public AudioPlayer(Context context){
 		super();
 		this.context = context;
+		
 		setAudioStreamType(AudioManager.STREAM_MUSIC);
 		setOnPreparedListener(this);
 		setOnErrorListener(this);
@@ -40,6 +42,18 @@ MediaPlayer.OnCompletionListener
 	public void playResource(int id){
 		create(context, id);
 		start();
+	}
+	
+	public void playFromStream(FileDescriptor fd){
+		try
+		{
+			setDataSource(fd);
+			prepareAsync();
+		}
+		catch (Exception e)
+		{
+			Log.e("AudioPlayer",e.getMessage());	
+		}
 	}
 	
 	@Override
